@@ -5,7 +5,6 @@ import User from '../../Models/User'
 export default class UsersController {
   public async create ({request}:HttpContextContract){
     const validated = await request.validate(UserValidator)
-    const user = await User.create(validated)
-    return user
+    return await User.create(validated)
   }
 }
