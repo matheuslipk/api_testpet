@@ -21,6 +21,8 @@
 import Route from '@ioc:Adonis/Core/Route'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
+Route.post('/sessions/create', 'SessionsController.create')
+
 Route.post('/users/create', 'UsersController.create')
 
 Route.post('/products/create', 'ProductsController.create')
