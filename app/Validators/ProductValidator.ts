@@ -25,8 +25,8 @@ export default class ProductValidator {
    *    ```
    */
   public schema = schema.create({
-    name: schema.string({}, [rules.alpha(), rules.minLength(3)]),
-    desc: schema.string(),
+    name: schema.string({}, [rules.minLength(3)]),
+    description: schema.string(),
     category: schema.string({}, [rules.alpha(), rules.minLength(3)]),
     price: schema.number([rules.unsigned()]),
     stock: schema.number(),

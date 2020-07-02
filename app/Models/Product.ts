@@ -10,7 +10,7 @@ export default class Product extends BaseModel {
   public name: string
 
   @column()
-  public desc: string
+  public description: string
 
   @column()
   public category: string
@@ -20,6 +20,9 @@ export default class Product extends BaseModel {
 
   @column()
   public stock: number
+
+  @column()
+  public created_by: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -19,15 +19,12 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
 Route.post('/sessions/create', 'SessionsController.create')
 
 Route.post('/users/create', 'UsersController.create')
 
-Route.post('/products/create', 'ProductsController.create').middleware('Auth')
-
-Route.get('health', async ({ response }) => {
-  const report = await HealthCheck.getReport()
-  return report.healthy ? response.ok(report) : response.badRequest(report)
-})
+Route.get('/products', 'ProductsController.index').middleware('Auth')
+Route.post('/products', 'ProductsController.create').middleware('Auth')
+Route.put('/products/:product_id', 'ProductsController.update').middleware('Auth')
+Route.delete('/products/:product_id', 'ProductsController.delete').middleware('Auth')
