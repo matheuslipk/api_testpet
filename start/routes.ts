@@ -25,7 +25,7 @@ Route.post('/sessions/create', 'SessionsController.create')
 
 Route.post('/users/create', 'UsersController.create')
 
-Route.post('/products/create', 'ProductsController.create')
+Route.post('/products/create', 'ProductsController.create').middleware('Auth')
 
 Route.get('health', async ({ response }) => {
   const report = await HealthCheck.getReport()
