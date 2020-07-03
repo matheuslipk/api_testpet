@@ -42,4 +42,5 @@ Server.middleware.register([
 */
 Server.middleware.registerNamed({
   Auth: 'App/Middleware/Auth',
+  Guest: 'App/Middleware/Guest',
 })

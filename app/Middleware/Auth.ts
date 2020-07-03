@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { TokenInfo } from '@ioc:Adonis/Core/Request'
 
 export default class Auth {
-  public async handle ({request, response}: HttpContextContract, next: () => Promise<void>) {
+  public async handle ({request, response, logger}: HttpContextContract, next: () => Promise<void>) {
     const authorization = request.header('authorization')
 
     if (!authorization) {
@@ -16,11 +16,16 @@ export default class Auth {
       const APP_KEY = Env.get('APP_KEY') as string
       const decode = jwt.verify(token, APP_KEY) as TokenInfo
       request.tokenInfo = decode
+      logger.info(`AUTH: (${request.tokenInfo.uuid}) ${request.ip()} -> ${request.method()} `
+          + ` ${request.url()} ${JSON.stringify(request.all())}`)
       return next()
     } catch (error) {
       if (error.name === 'TokenExpiredError') {
-        return response.status(400).json({ error: { message: 'Sessão Expirada' } })
+        logger.warn(`AUTH: (Expired Session) ${request.ip()} -> ${request.method()} ${request.url()} `
+           + `${JSON.stringify(request.all())}`)
+        return response.status(400).json({ error: { message: 'Expired Session' } })
       }
+      logger.error(`AUTH: ${request.ip()} -> ${request.method()} ${request.url()} ${JSON.stringify(request.all())}`)
       return response.status(400).json({ error })
     }
   }
