@@ -26,7 +26,7 @@ export default class User extends BaseModel {
   public static async createUUID (user: User) {
     user.uuid = uuid()
     if (user.$dirty.password) {
-      user.password = await Hash.hash(user.password)
+      user.password = await Hash.make(user.password)
     }
   }
 }
