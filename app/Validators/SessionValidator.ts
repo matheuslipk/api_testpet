@@ -49,5 +49,10 @@ export default class SessionValidator {
    *   'scores.*.number': 'Define scores as valid numbers'
    * }
   */
-  public messages = {}
+  public messages = {
+    'email.required': 'O email é obrigatório',
+    'email.email': 'O email não está em um formato válido',
+    'password.required': 'A senha é obrigatória',
+    'password.minLength': 'A senha deve ter pelo menos 3 caracteres',
+  }
 }

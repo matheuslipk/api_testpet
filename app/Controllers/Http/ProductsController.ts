@@ -13,8 +13,20 @@ export default class ProductsController {
       .whereRaw(`name LIKE '%${name || ''}%'`)
       .whereRaw(`description LIKE '%${description || ''}%'`)
       .whereRaw(`category LIKE '%${category || ''}%'`)
-      .paginate(page,10)
+      .paginate(page, 10)
     return products.toJSON()
+  }
+
+  public async show ({response, params}:HttpContextContract){
+    let {id} = params
+
+    const product = await Product.findBy('uuid', id)
+
+    if(product){
+      return product.toJSON()
+    }else{
+      return response.notFound({error: 'Product not found'})
+    }
   }
 
   public async create ({request}:HttpContextContract){

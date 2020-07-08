@@ -13,16 +13,16 @@ export default class SessionsController {
     const user = await User.query().where({email: validated.email}).first()
 
     if(!user){
-      return response.unauthorized({error: 'email not found'})
+      return response.unauthorized({error: 'Não existe um usuário com esse email'})
     }
     const isMatch = await Hash.verify(user.password, validated.password)
     if(!isMatch){
-      return response.unauthorized({error: 'password wrong'})
+      return response.unauthorized({error: 'Senha incorreta'})
     }
 
     const token = jwt.sign({
       uuid: user.uuid,
-    }, APP_KEY, { expiresIn: '2h' })
+    }, APP_KEY, { expiresIn: '1d' })
 
     return {
       token,

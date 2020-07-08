@@ -25,6 +25,7 @@ Route.post('/sessions/create', 'SessionsController.create').middleware('Guest')
 Route.post('/users/create', 'UsersController.create').middleware('Guest')
 
 Route.get('/products', 'ProductsController.index').middleware('Auth')
+Route.get('/products/:id', 'ProductsController.show').middleware('Auth')
 Route.post('/products', 'ProductsController.create').middleware('Auth')
 Route.put('/products/:product_id', 'ProductsController.update').middleware('Auth')
 Route.delete('/products/:product_id', 'ProductsController.delete').middleware('Auth')

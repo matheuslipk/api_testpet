@@ -20,13 +20,8 @@ export default class Auth {
           + ` ${request.url()} ${JSON.stringify(request.all())}`)
       return next()
     } catch (error) {
-      if (error.name === 'TokenExpiredError') {
-        logger.warn(`AUTH: (Expired Session) ${request.ip()} -> ${request.method()} ${request.url()} `
-           + `${JSON.stringify(request.all())}`)
-        return response.status(400).json({ error: { message: 'Expired Session' } })
-      }
-      logger.error(`AUTH: ${request.ip()} -> ${request.method()} ${request.url()} ${JSON.stringify(request.all())}`)
-      return response.status(400).json({ error })
+      logger.error(`AUTH: (${error.name}) ${request.ip()} -> ${request.method()} ${request.url()} ${JSON.stringify(request.all())}`)
+      return response.unauthorized({error})
     }
   }
 }
