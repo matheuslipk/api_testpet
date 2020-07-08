@@ -10,9 +10,11 @@ export default class ProductsController {
     }
     const products = await Product
       .query()
+      .where({user_uuid: request.tokenInfo?.uuid})
       .whereRaw(`name LIKE '%${name || ''}%'`)
       .whereRaw(`description LIKE '%${description || ''}%'`)
       .whereRaw(`category LIKE '%${category || ''}%'`)
+      .orderBy('created_at', 'desc')
       .paginate(page, 10)
     return products.toJSON()
   }
@@ -33,7 +35,7 @@ export default class ProductsController {
     const validated = await request.validate(ProductValidator)
     const product = await Product.create({
       ...validated,
-      created_by:request.tokenInfo?.uuid,
+      user_uuid:request.tokenInfo?.uuid,
     })
     return product
   }

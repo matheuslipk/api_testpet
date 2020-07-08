@@ -25,9 +25,9 @@ export default class UserValidator {
    *    ```
    */
   public schema = schema.create({
-    name: schema.string({}, [rules.alpha(), rules.minLength(3)]),
+    name: schema.string({trim: true}, [rules.minLength(3)]),
     email: schema.string({},[rules.email(), rules.unique({table: 'users', column: 'email'})]),
-    password: schema.string({trim: true},[rules.minLength(3)]),
+    password: schema.string({},[rules.minLength(3)]),
   })
 
   /**
@@ -51,6 +51,8 @@ export default class UserValidator {
    * }
   */
   public messages = {
-    'email.unique': 'This email is already in use.',
+    'name.minLength': 'O nome deve ter pelo menos 3 caracteres',
+    'email.unique': 'Esse email já esta em uso',
+    'password.minLength': 'A senha deve ter pelo menos 3 caracteres',
   }
 }

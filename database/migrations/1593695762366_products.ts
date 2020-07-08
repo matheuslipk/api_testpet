@@ -6,7 +6,7 @@ export default class Products extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('uuid').notNullable().primary()
-      table.uuid('created_by').notNullable().references('uuid').inTable('users')
+      table.uuid('user_uuid').notNullable().references('uuid').inTable('users')
       table.string('name').notNullable()
       table.string('description')
       table.string('category').notNullable()

@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, beforeSave } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, beforeSave, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import {uuid} from 'uuidv4'
 import Hash from '@ioc:Adonis/Core/Hash'
+import Product from 'App/Models/Product'
 
 export default class User extends BaseModel {
-  @column()
+  @column({isPrimary: true})
   public uuid: string
 
   @column()
@@ -21,6 +22,9 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasMany(()=>Product)
+  public products: HasMany<typeof Product>
 
   @beforeSave()
   public static async createUUID (user: User) {
