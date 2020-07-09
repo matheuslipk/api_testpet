@@ -48,10 +48,13 @@ export default class ProductsController {
     return updated
   }
 
-  public async delete ({params}:HttpContextContract){
-    const deleted = await Product.query().where({
+  public async delete ({params, response}:HttpContextContract){
+    const [deleted] = await Product.query().where({
       uuid: params.product_id,
     }).delete()
+    if(!deleted){
+      return response.notFound({error: 'Não foi possivel realizar essa ação'})
+    }
     return deleted
   }
 }
